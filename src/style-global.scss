@@ -1,0 +1,17 @@
+.ant-picker{
+    width: 100%;
+}
+.modal-dialog {
+    transform: translate(0, 0%) !important; 
+}
+.modal {
+    z-index: 3 !important;
+}
+.modal-content{
+    z-index: 3 !important;
+}
+.fade {
+    &.modal-backdrop{
+        z-index: 2 !important;
+    }
+} 
