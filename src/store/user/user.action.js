@@ -10,7 +10,8 @@ import {
   GET_FRIEND_REQUEST_SUCCESS,
   UNFRIEND_SUCCESS,
   GET_IMAGE_USE_SUCCESS,
-  GET_USERS
+  GET_USERS,
+  CHANGE_STATUS_USER_SUCCESS
 } from "store/user/user.constant";
 import { useSelector } from "react-redux";
 import { setNotify } from "../common/common.action";
@@ -91,7 +92,7 @@ export const friendRequest = (data) => {
         })
       );
     } catch (err) {
-      dispatch(setNotify(err.response));
+      console.log(err)
     }
   };
 };
@@ -107,7 +108,7 @@ export const friendRequestRespone = (data) => {
         await dispatch(getUserCurrentProfile());
       }
     } catch (err) {
-      dispatch(setNotify(err.response));
+      console.log(err)
     }
   };
 };
@@ -123,7 +124,7 @@ export const unfriend = (data) => {
         await dispatch(unfriendSuccess(data));
       }
     } catch (err) {
-      dispatch(setNotify(err.response));
+      console.log(err)
     }
   };
 };
@@ -151,7 +152,7 @@ export const getFriendsRequest = (data) => {
       console.log(res, "res");
       await dispatch(getFriendsRequestSuccess(res.data));
     } catch (err) {
-      dispatch(setNotify(err.response));
+      console.log(err)
     }
   };
 };
@@ -177,13 +178,36 @@ export const getImageUser = (data) => {
       console.log(res, "res");
       await dispatch(getImageUserSuccess(res.data));
     } catch (err) {
-      dispatch(setNotify(err.response));
+      console.log(err)
     }
   };
 };
 const getImageUserSuccess = (data)=>{
   return{
     type:GET_IMAGE_USE_SUCCESS,
+    payload:data
+  }
+}
+
+export const changeStatusUser = (data)=>{
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        `${HTTP_CONNECT}/admin/editStatusUser`,
+        data,
+        config
+      );
+      console.log(res, "res");
+      await dispatch(changeStatusUserSuccess(data));
+    } catch (err) {
+      console.log(err)
+    }
+  };
+}
+
+const changeStatusUserSuccess = (data)=>{
+  return{
+    type:CHANGE_STATUS_USER_SUCCESS,
     payload:data
   }
 }

@@ -4,9 +4,12 @@ import moment from "moment";
 import { DATE_FORMAT } from "util/index";
 import { Button, Form, Row, Col, Input, Switch, DatePicker, Tabs } from "antd";
 import UserList from "views/UserManagement/UserList";
+import {changeStatusUser} from "store/user/user.action"
+import { useDispatch } from "react-redux";
 import "./style.scss";
 const EditUser = ({ user }) => {
   const { TabPane } = Tabs;
+  const dispatch = useDispatch();
   const formRef = useRef();
   const [form] = Form.useForm();
   const [status, setStatus] = useState(
@@ -30,10 +33,21 @@ const EditUser = ({ user }) => {
     form.setFieldsValue(currentUser);
   }, [currentUser]);
 
+  useEffect(() => {
+    setCurrentUser(user);
+    setStatus(user?.status == 1 ? true : false ?? false);
+  }, [user]);
   const setUser = (value) => {
     console.log(value);
     form.resetFields();
     setCurrentUser(value);
+  };
+
+  const handleChangeStatus = (value) => {
+    dispatch(
+      changeStatusUser({ userId: user._id, status: value === true ? 1 : 0 })
+    );
+    setStatus(value);
   };
   return (
     <Form
@@ -86,13 +100,13 @@ const EditUser = ({ user }) => {
           <Form.Item label="Trạng thái">
             <Switch
               checked={status}
-              onChange={(checked) => setStatus(checked)}
+              onChange={(checked) => handleChangeStatus(checked)}
             />
           </Form.Item>
         </Col>
       </Row>
       <Row>
-        <Tabs defaultActiveKey="1" style={{width:"100%"}} >
+        <Tabs defaultActiveKey="1" style={{ width: "100%" }}>
           <TabPane tab="Danh sách bạn bè" key="1">
             <UserList type="modal" setUser={setUser}></UserList>
           </TabPane>

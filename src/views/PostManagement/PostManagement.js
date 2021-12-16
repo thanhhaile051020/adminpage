@@ -15,7 +15,7 @@ import {
   Form,
   OverlayTrigger,
 } from "react-bootstrap";
-import { Input, Space, Table, Tooltip, DatePicker } from "antd";
+import { Input, Space, Table, Tooltip, DatePicker, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import EditPost from "views/PostManagement/EditPost/EditPost";
 import Search from "components/Search/index";
@@ -68,10 +68,12 @@ const PostManagement = ({ match }) => {
       key: "_id",
     },
     {
-      title: "Id User",
+      title: "Tên người dùng",
       key: "posterId",
       render: (text, record) => (
-        <a href={`/admin/table/${record.poster._id}`}>{record.poster._id}</a>
+        <a href={`/admin/table/${record.poster._id}`}>
+          {record.poster.username}
+        </a>
       ),
     },
     {
@@ -91,7 +93,13 @@ const PostManagement = ({ match }) => {
       title: "Ngày tạo",
       dataIndex: "createAt",
       key: "createAt",
-      render: (createAt) => <p>{moment(createAt??moment()).format(DATE_FORMAT).toString()}</p>,
+      render: (createAt) => (
+        <p>
+          {moment(createAt ?? moment())
+            .format(DATE_FORMAT)
+            .toString()}
+        </p>
+      ),
     },
     {
       title: "Ngày cập nhật",
@@ -116,18 +124,15 @@ const PostManagement = ({ match }) => {
           >
             View
           </a>
-          <a
-            onClick={() => {
-              setListReportPost(
-                listReportPost.map((e) => {
-                  e.username = "a";
-                  return e;
-                })
-              );
-            }}
-          >
-            View
-          </a>
+          <Switch
+            checked={record.status === 1 ? true : false}
+            onChange={(checked) =>
+              editPost({
+                postId: record._id,
+                data: { status: checked === true ? 1 : 0 },
+              })
+            }
+          />
         </Space>
       ),
     },
@@ -149,6 +154,16 @@ const PostManagement = ({ match }) => {
       default:
         return "Vấn đề khác";
     }
+  };
+  const editPost = async (data) => {
+    await axios.post(`${HTTP_CONNECT}/admin/editPost`, data, getConfig());
+    let newListReportPost = listReportPost.map((post) => {
+      if (post._id === data.postId) {
+        post = { ...post, ...data.data };
+      }
+      return post;
+    });
+    setListReportPost(newListReportPost);
   };
   return (
     <>
@@ -174,7 +189,7 @@ const PostManagement = ({ match }) => {
           </Col>
         </Row>
         <Dialog size="lg" showModal={showModal} setShowModal={setShowModal}>
-          <EditPost post={currentPost} />
+          <EditPost post={currentPost} setPost={(data) => editPost(data)} />
         </Dialog>
       </Container>
     </>

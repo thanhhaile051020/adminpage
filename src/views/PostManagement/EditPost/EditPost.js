@@ -5,7 +5,7 @@ import { DATE_FORMAT, getUrlImage } from "util/index";
 import { Image, Form, Row, Col, Input, Switch, DatePicker, Tabs } from "antd";
 import UserList from "views/UserManagement/UserList";
 import "./style.scss";
-const EditPost = ({ post }) => {
+const EditPost = ({ post, setPost }) => {
   const { TextArea } = Input;
   const formRef = useRef();
   const [form] = Form.useForm();
@@ -28,6 +28,7 @@ const EditPost = ({ post }) => {
   };
   useEffect(() => {
     formRef.current.setFieldsValue({ username: post.poster.username });
+    console.log("change");
   }, [post]);
   useEffect(() => {
     form.setFieldsValue(currentPost);
@@ -81,9 +82,19 @@ const EditPost = ({ post }) => {
         <Col span={8} style={{ flex: "none" }}>
           <Form.Item label="Trạng thái">
             <Switch
+              checked={status }
+              onChange={(checked) => {
+                setPost({
+                  postId: post._id,
+                  data: { status: checked === true ? 1 : 0 },
+                });
+                setStatus(checked);
+              }}
+            />
+            {/* <Switch
               checked={status}
               onChange={(checked) => setStatus(checked)}
-            />
+            /> */}
           </Form.Item>
         </Col>
       </Row>
@@ -111,7 +122,7 @@ const EditPost = ({ post }) => {
                     <img width={180} src={getUrlImage(item.file)} />
                     <img width={180} src={getUrlImage(item.file)} />
                     <img width={180} src={getUrlImage(item.file)} />
-                    </>
+                  </>
                 ))
               )}
             </div>

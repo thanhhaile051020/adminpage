@@ -39,8 +39,8 @@ export const postReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         postList: state.postList.map((post) => {
-          if (post._id === payload.data._id) {
-            post = payload.data;
+          if (post._id === payload.postId) {
+            post = payload;
           }
           return post;
         }),

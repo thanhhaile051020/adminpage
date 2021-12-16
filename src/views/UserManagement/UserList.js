@@ -54,7 +54,7 @@ const UserList = ({
           >
             View
           </a>
-          <a
+          {/* <a
             onClick={() => {
               setListUsers(
                 listUsers.map((e) => {
@@ -65,7 +65,7 @@ const UserList = ({
             }}
           >
             View
-          </a>
+          </a> */}
         </Space>
       ),
     },

@@ -10,7 +10,7 @@ import {
   LIKE_COMMENT_SUCCESS,
   POST_COMMENT_SUCCESS
 } from "store/post/post.constant";
-import apis from "service";
+// import apis from "service";
 import { setNotify } from "../common/common.action";
 const config = {
   headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -65,27 +65,26 @@ const createPostAction = (data) => {
   };
 };
 
-export const editPost = (post) => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.put(`${HTTP_CONNECT}/post`, post, config);
-      if (res.status === 200) {
-        await dispatch(editPostAction(res));
-        await dispatch(setNotify(res.status));
-      }
-    } catch (err) {
-      // console.log(err.response);
-      dispatch(setNotify(err.response.status));
-    }
-  };
-};
+// export const editPost = (post) => {
+//   return async (dispatch) => {
+//     try {
+//       const res = await axios.put(`${HTTP_CONNECT}/admin/editPost`, post, config);
+//       if (res.status === 200) {
+//         await dispatch(editPostAction(post));
+//       }
+//     } catch (err) {
+//       console.log(err.response);
+//     }
+//   };
+// };
 
-const editPostAction = (data) => {
-  return {
-    type: EDIT_POST_SUCCESS,
-    payload: data,
-  };
-};
+
+// const editPostAction = (data) => {
+//   return {
+//     type: EDIT_POST_SUCCESS,
+//     payload: data,
+//   };
+// };
 
 export const deletePost = (postId) => {
   return async (dispatch) => {
