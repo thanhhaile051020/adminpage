@@ -101,6 +101,9 @@ const ReportManagementPost = ({ match }) => {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
+      render: (status, record) => (
+        <div>{status===0?"Chờ duyệt":"Đã duyệt"}</div>
+      ),
     },
     // {
     //   title: "Action",
