@@ -81,8 +81,10 @@ const ReportManagementPost = ({ match }) => {
     },
     {
       title: "Lý do",
-      dataIndex: "type",
       key: "type",
+      render: (text, record) => (
+        <div>{reportReason(+record.type)}</div>
+      ),
     },
     {
       title: "Bổ sung",
