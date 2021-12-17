@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dialog from "components/Dialog/index";
 import axios from "axios";
 import { HTTP_CONNECT } from "config";
+import moment from "moment";
 // react-bootstrap components
 import {
   Badge,
@@ -16,7 +17,7 @@ import {
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-import { getConfig } from "util/index";
+import { getConfig, DATE_FORMAT } from "util/index";
 import { Input, Space, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import Search from "components/Search/index";
@@ -91,10 +92,17 @@ const ReportManagementPost = ({ match }) => {
       dataIndex: "content",
       key: "content",
     },
-    {
+     {
       title: "Ngày tạo",
       dataIndex: "createAt",
       key: "createAt",
+      render: (createAt) => (
+        <p>
+          {moment(createAt ?? moment())
+            .format(DATE_FORMAT)
+            .toString()}
+        </p>
+      ),
     },
     {
       title: "Trạng thái",
