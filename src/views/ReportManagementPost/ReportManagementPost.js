@@ -122,17 +122,17 @@ const ReportManagementPost = ({ match }) => {
   const reportReason = (type) => {
     switch (type) {
       case 1:
-        return "Giả mạo người khác";
+        return "Thông tin sai sự thật";
       case 2:
-        return "Spam hoặc gây hại";
+        return "Bạo lực";
       case 3:
-        return "Không dùng tên thật";
+        return "Quấy rối";
       case 4:
-        return "Đăng nội dung không phù hợp";
+        return "Spam";
       case 5:
-        return "Quấy rối hoặc bắt nạt";
+        return "Ngôn ngữ gây thù ghét";
       case 6:
-        return "Vấn đề khác";
+        return "Bán hàng trái phép";
       default:
         return "Vấn đề khác";
     }

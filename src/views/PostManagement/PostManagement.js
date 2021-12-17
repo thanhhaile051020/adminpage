@@ -137,24 +137,7 @@ const PostManagement = ({ match }) => {
       ),
     },
   ];
-  const reportReason = (type) => {
-    switch (type) {
-      case 1:
-        return "Giả mạo người khác";
-      case 2:
-        return "Spam hoặc gây hại";
-      case 3:
-        return "Không dùng tên thật";
-      case 4:
-        return "Đăng nội dung không phù hợp";
-      case 5:
-        return "Quấy rối hoặc bắt nạt";
-      case 6:
-        return "Vấn đề khác";
-      default:
-        return "Vấn đề khác";
-    }
-  };
+
   const editPost = async (data) => {
     await axios.post(`${HTTP_CONNECT}/admin/editPost`, data, getConfig());
     let newListReportPost = listReportPost.map((post) => {
