@@ -17,16 +17,16 @@ import {
   Tooltip,
 } from "react-bootstrap";
 import { getConfig } from "util/index";
-import { Input, Space,Table } from "antd";
+import { Input, Space, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import EditUsers from "views/EditUser/EditUser";
+import EditReportPost from "./EditReportPost/EditReportPost";
 import Search from "components/Search/index";
 const ReportManagementPost = ({ match }) => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const [listReportPost, setListReportPost] = useState([]);
   const [listReportPostSearched, setListReportPostSearched] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentReportPost, setCurrentReportPost] = useState(null);
   const [keySearch, setKeySearch] = useState("");
   const onSearch = () => {
     let newListReport = [];
@@ -46,7 +46,10 @@ const ReportManagementPost = ({ match }) => {
   }, []);
 
   const getReport = async () => {
-    let data = await axios.get(`${HTTP_CONNECT}/admin/getRepostsPost`, getConfig());
+    let data = await axios.get(
+      `${HTTP_CONNECT}/admin/getRepostsPost`,
+      getConfig()
+    );
     console.log(data.data.data);
     setListReportPost(data.data.data);
   };
@@ -81,8 +84,10 @@ const ReportManagementPost = ({ match }) => {
     },
     {
       title: "Post Id",
-      dataIndex: "postId",
       key: "postId",
+      render: (text, record) => (
+        <a href={`/admin/postmanagement/${record._id}`}>{record._id}</a>
+      ),
     },
     {
       title: "Ngày tạo",
@@ -101,26 +106,8 @@ const ReportManagementPost = ({ match }) => {
     //     <Space size="middle">
     //       <a
     //         onClick={() => {
-    //           if (type == "none") {
-    //             setShowModal(true);
-    //             setCurrentUser(record);
-    //           }
-
-    //           if (type == "modal") {
-    //             setUser(record);
-    //           }
-    //         }}
-    //       >
-    //         View
-    //       </a>
-    //       <a
-    //         onClick={() => {
-    //           setListReportPost(
-    //             listReportPost.map((e) => {
-    //               e.username = "a";
-    //               return e;
-    //             })
-    //           );
+    //           setShowModal(true);
+    //           setCurrentReportPost(record);
     //         }}
     //       >
     //         View
@@ -171,7 +158,7 @@ const ReportManagementPost = ({ match }) => {
           </Col>
         </Row>
         <Dialog size="lg" showModal={showModal} setShowModal={setShowModal}>
-          <EditUsers user={currentUser} />
+          <EditReportPost reportPost={currentReportPost} />
         </Dialog>
       </Container>
     </>

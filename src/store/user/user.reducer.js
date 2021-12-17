@@ -1,4 +1,4 @@
-import { GET_USERS ,CHANGE_STATUS_USER_SUCCESS} from "./user.constant";
+import { GET_USERS, CHANGE_STATUS_USER_SUCCESS } from "./user.constant";
 
 const initialState = {
   listUsers: [],
@@ -11,7 +11,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       let newListUsers = state.listUsers;
       newListUsers = newListUsers.map((user) => {
         if (user._id !== payload.userId) return user;
-        user.status == payload.status;
+        user.status = payload.status;
         return user;
       });
       return { ...state, listUsers: newListUsers };

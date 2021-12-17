@@ -23,7 +23,7 @@ import { getConfig, DATE_FORMAT } from "util/index";
 const PostManagement = ({ match }) => {
   const [showModal, setShowModal] = useState(false);
   const [listReportPost, setListReportPost] = useState([]);
-  const [listReportPostSearched, setListReportPostSearched] = useState([]);
+  const [listPostSearched, setListPostSearched] = useState([]);
   const [currentPost, setCurrentPost] = useState(null);
   const [keySearch, setKeySearch] = useState("");
   const onSearch = () => {
@@ -32,12 +32,12 @@ const PostManagement = ({ match }) => {
       newListReport = listReportPost.filter(
         (report) =>
           report._id?.includes(keySearch) ||
-          report.content?.includes(keySearch) ||
-          report.postId?.includes(keySearch)
+          report.text?.includes(keySearch) ||
+          report.poster.username?.includes(keySearch)
       );
     } else newListReport = listReportPost;
     console.log(newListReport);
-    setListReportPostSearched(newListReport);
+    setListPostSearched(newListReport);
   };
   useEffect(() => {
     getReport();
@@ -181,7 +181,7 @@ const PostManagement = ({ match }) => {
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
                 <Table
-                  dataSource={listReportPostSearched}
+                  dataSource={listPostSearched}
                   columns={columns}
                 ></Table>
               </Card.Body>

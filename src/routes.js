@@ -59,14 +59,14 @@ const dashboardRoutes = [
   },
   {
     path: "/reportpost/:keySearch",
-    name: "REPORT MANAGEMENT",
+    name: "Post Report",
     icon: "nc-icon nc-notes",
     component: ReportManagementPost,
     layout: "/admin",
   },
   {
     path: "/reportuser/:keySearch",
-    name: "USER REPORT MANAGEMENT",
+    name: "User Report",
     icon: "nc-icon nc-notes",
     component: ReportManagement,
     layout: "/admin",

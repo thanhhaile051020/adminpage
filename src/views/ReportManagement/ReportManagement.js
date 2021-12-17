@@ -19,8 +19,8 @@ import {
 import { getConfig } from "util/index";
 import { Input, Space, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import EditUsers from "views/EditUser/EditUser";
 import Search from "components/Search/index";
+import EditReportPost from "./EditReportPost/EditReportPost";
 const ReportManagementPost = ({ match }) => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
@@ -106,26 +106,8 @@ const ReportManagementPost = ({ match }) => {
     //     <Space size="middle">
     //       <a
     //         onClick={() => {
-    //           if (type == "none") {
-    //             setShowModal(true);
-    //             setCurrentUser(record);
-    //           }
-
-    //           if (type == "modal") {
-    //             setUser(record);
-    //           }
-    //         }}
-    //       >
-    //         View
-    //       </a>
-    //       <a
-    //         onClick={() => {
-    //           setListReportPost(
-    //             listReportPost.map((e) => {
-    //               e.username = "a";
-    //               return e;
-    //             })
-    //           );
+    //           setShowModal(true);
+    //           setCurrentUser(record);
     //         }}
     //       >
     //         View
@@ -176,7 +158,7 @@ const ReportManagementPost = ({ match }) => {
           </Col>
         </Row>
         <Dialog size="lg" showModal={showModal} setShowModal={setShowModal}>
-          <EditUsers user={currentUser} />
+          <EditReportPost currentUser={currentUser} />
         </Dialog>
       </Container>
     </>

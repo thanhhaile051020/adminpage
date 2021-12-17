@@ -17,10 +17,11 @@ import {
 } from "react-bootstrap";
 import { Input, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import EditUsers from "views/EditUser/EditUser";
+import EditUsers from "./EditUser/EditUser";
 import { getUsers } from "store/user/user.action";
 import Search from "components/Search/index";
 import UserList from "./UserList";
+import {changeStatusUser} from "store/user/user.action"
 const UserManagement = ({match}) => {
   
   const reducerUsers = useSelector(
@@ -66,6 +67,13 @@ const UserManagement = ({match}) => {
     console.log('change')
     onSearch();
   }, [keySearch]);
+
+  
+  const handleChangeStatus = (data) => {
+    dispatch(
+      changeStatusUser(data)
+    );
+  };
   return (
     <>
       <Container fluid>
@@ -83,6 +91,7 @@ const UserManagement = ({match}) => {
                     listUsers={listUsersSearched}
                     setCurrentUser={setCurrentUser}
                     setShowModal={setShowModal}
+                    handleChangeStatus={handleChangeStatus}
                   ></UserList>
                 {/* </Table> */}
               </Card.Body>

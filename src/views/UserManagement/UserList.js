@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dialog from "components/Dialog/index";
 // react-bootstrap components
-import { Badge, Button, Card, Navbar, Nav, Row, Col } from "antd";
+import { Switch } from "antd";
 import { Table, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,6 +11,7 @@ const UserList = ({
   listUsers,
   setShowModal,
   setCurrentUser,
+  handleChangeStatus,
 }) => {
   const dispatch = useDispatch();
 
@@ -54,6 +55,16 @@ const UserList = ({
           >
             View
           </a>
+          <Switch
+            checked={record.status === 1 ? true : false}
+            onChange={(checked) =>
+              handleChangeStatus({
+                userId: record._id,
+                status: checked === true ? 1 : 0,
+              })
+            }
+          />
+
           {/* <a
             onClick={() => {
               setListUsers(
@@ -70,6 +81,11 @@ const UserList = ({
       ),
     },
   ];
+
+  useEffect(()=>{
+    console.log('listUsers',listUsers)
+  },[listUsers])
+
   return (
     <>
       <div>
@@ -78,40 +94,7 @@ const UserList = ({
           columns={columns}
           scroll={{ y: type == "none" ? -1 : 300 }}
         ></Table>
-        {/* <Table className="table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th className="border-0">ID</th>
-                      <th className="border-0">Name</th>
-                      <th className="border-0">Email</th>
-                      <th className="border-0">Full name</th>
-                      <th className="border-0">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listUsers.length > 0 &&
-                      listUsers.map((user) => (
-                        <tr
-                          onClick={() => {
-                            if (type == "none") {
-                              setShowModal(true);
-                              setCurrentUser(user);
-                            }
-
-                            if (type == "modal") {
-                              setUser(user);
-                            }
-                          }}
-                        >
-                          <td>{user._id}</td>
-                          <td>{user.username}</td>
-                          <td>{user.email}</td>
-                          <td>{user?.fullName ?? ""}</td>
-                          <td></td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </Table> */}
+       
       </div>
     </>
   );
