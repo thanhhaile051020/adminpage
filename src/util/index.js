@@ -15,6 +15,10 @@ export const friendRelate = (a, b) => {
   return symmetricDifference(a, b);
 };
 
+export const sortAlphabet = (data)=>{
+  data.sort((a, b) => a.poster.username.toLowerCase().localeCompare(b.poster.username.toLowerCase()))
+}
+
 export const getConfig = () => {
   return {
     headers: {

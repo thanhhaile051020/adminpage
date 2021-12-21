@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Dialog from "components/Dialog/index";
 // react-bootstrap components
 import {
@@ -21,19 +21,18 @@ import EditUsers from "./EditUser/EditUser";
 import { getUsers } from "store/user/user.action";
 import Search from "components/Search/index";
 import UserList from "./UserList";
-import {changeStatusUser} from "store/user/user.action"
-const UserManagement = ({match}) => {
-  
+import { changeStatusUser ,updateProfile} from "store/user/user.action";
+const UserManagement = ({ match }) => {
   const reducerUsers = useSelector(
     (state) => state.userReducer.listUsers ?? []
   );
-
+  const formRef = useRef();
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const [listUsers, setListUsers] = useState(reducerUsers);
   const [listUsersSearched, setListUsersSearched] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-  const [keySearch,setKeySearch]= useState("");
+  const [keySearch, setKeySearch] = useState("");
 
   const onSearch = () => {
     let newListUser = [];
@@ -60,19 +59,26 @@ const UserManagement = ({match}) => {
     onSearch();
   }, [listUsers]);
   useEffect(() => {
-   
-    setKeySearch( match.params.keySearch===":keySearch"?"":match.params.keySearch)
+    setKeySearch(
+      match.params.keySearch === ":keySearch" ? "" : match.params.keySearch
+    );
   }, [match.params.keySearch]);
   useEffect(() => {
-    console.log('change')
+    console.log("change");
     onSearch();
   }, [keySearch]);
 
-  
   const handleChangeStatus = (data) => {
-    dispatch(
-      changeStatusUser(data)
-    );
+    dispatch(changeStatusUser(data));
+  };
+
+  const onSubmit = () => {
+    console.log("ref", formRef.current.getFormValue());
+    let data = {
+      userId: currentUser._id,
+      data: formRef.current.getFormValue(),
+    };
+    dispatch(updateProfile(data))
   };
   return (
     <>
@@ -82,24 +88,32 @@ const UserManagement = ({match}) => {
             <Card className="strpied-tabled-with-hover">
               <Card.Header>
                 <Space direction="vertical">
-                  <Search value={keySearch} onSearch={(value) => setKeySearch(value)} />
+                  <Search
+                    value={keySearch}
+                    onSearch={(value) => setKeySearch(value)}
+                  />
                 </Space>
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
                 {/* <Table className="table-hover table-striped"> */}
-                  <UserList
-                    listUsers={listUsersSearched}
-                    setCurrentUser={setCurrentUser}
-                    setShowModal={setShowModal}
-                    handleChangeStatus={handleChangeStatus}
-                  ></UserList>
+                <UserList
+                  listUsers={listUsersSearched}
+                  setCurrentUser={setCurrentUser}
+                  setShowModal={setShowModal}
+                  handleChangeStatus={handleChangeStatus}
+                ></UserList>
                 {/* </Table> */}
               </Card.Body>
             </Card>
           </Col>
         </Row>
-        <Dialog size="lg" showModal={showModal} setShowModal={setShowModal}>
-          <EditUsers user={currentUser} />
+        <Dialog
+          size="lg"
+          showModal={showModal}
+          setShowModal={setShowModal}
+          onSubmit={onSubmit}
+        >
+          <EditUsers ref={formRef} user={currentUser} />
         </Dialog>
       </Container>
     </>

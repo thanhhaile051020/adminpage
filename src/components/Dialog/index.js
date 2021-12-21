@@ -28,7 +28,10 @@ const Dialog = (props) => {
           className="btn-simple btn-primary"
           type="button"
           variant="link"
-          onClick={() => props.setShowModal(false)}
+          onClick={() => {
+            props.setShowModal(false);
+            props.onSubmit();
+          }}
         >
           Cập nhật
         </Button>

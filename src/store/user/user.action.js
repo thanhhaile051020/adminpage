@@ -60,11 +60,10 @@ const getUserCurrentProfileAction = (data) => {
 export const updateProfile = (newProfile) => {
   return async (dispatch) => {
     try {
-      const res = await axios.put(`${HTTP_CONNECT}/users/`, newProfile, config);
-      await dispatch(updateProfileAction(res));
-      await dispatch(setNotify(res.status));
+      const res = await axios.post(`${HTTP_CONNECT}/admin/editUser`, newProfile, config);
+      await dispatch(updateProfileAction(newProfile));
     } catch (err) {
-      dispatch(setNotify(err.response.status));
+      console.log(err)
     }
   };
 };
@@ -75,119 +74,10 @@ const updateProfileAction = (data) => {
   };
 };
 
-export const friendRequest = (data) => {
-  return async (dispatch, getState) => {
-    try {
-      const profile = getState().userReducer.profileCurentUser;
-      const res = await axios.post(
-        `${HTTP_CONNECT}/users/friendRequest`,
-        data,
-        config
-      );
-      await dispatch(
-        friendRequestAction({
-          ...data,
-          user: { _id: profile._id },
-          createAt: Date.now(),
-        })
-      );
-    } catch (err) {
-      console.log(err)
-    }
-  };
-};
-export const friendRequestRespone = (data) => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.post(
-        `${HTTP_CONNECT}/users/friendRespone`,
-        data,
-        config
-      );
-      if (res.status == 200) {
-        await dispatch(getUserCurrentProfile());
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  };
-};
-export const unfriend = (data) => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.post(
-        `${HTTP_CONNECT}/users/unfriend`,
-        data,
-        config
-      );
-      if (res.status == 200) {
-        await dispatch(unfriendSuccess(data));
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  };
-};
-const unfriendSuccess = (data) => {
-  console.log(data);
-  return {
-    type: UNFRIEND_SUCCESS,
-    payload: data,
-  };
-};
-const friendRequestAction = (data) => {
-  console.log(data);
-  return {
-    type: FRIEND_REQUEST_SUCCESS,
-    payload: data,
-  };
-};
-export const getFriendsRequest = (data) => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.get(
-        `${HTTP_CONNECT}/users/getFriendRequest`,
-        config
-      );
-      console.log(res, "res");
-      await dispatch(getFriendsRequestSuccess(res.data));
-    } catch (err) {
-      console.log(err)
-    }
-  };
-};
-const getFriendsRequestSuccess = (data) => {
-  return {
-    type: GET_FRIEND_REQUEST_SUCCESS,
-    payload: data,
-  };
-};
-const friendRequestResponeAction = (data) => {
-  return {
-    type: FRIEND_REQUEST_RESPONE_SUCCESS,
-    payload: data,
-  };
-};
-export const getImageUser = (data) => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.get(
-        `${HTTP_CONNECT}/upload/getAllMediaByUserId?userId=${data}`,
-        config
-      );
-      console.log(res, "res");
-      await dispatch(getImageUserSuccess(res.data));
-    } catch (err) {
-      console.log(err)
-    }
-  };
-};
-const getImageUserSuccess = (data)=>{
-  return{
-    type:GET_IMAGE_USE_SUCCESS,
-    payload:data
-  }
-}
+
+
+
+
 
 export const changeStatusUser = (data)=>{
   return async (dispatch) => {

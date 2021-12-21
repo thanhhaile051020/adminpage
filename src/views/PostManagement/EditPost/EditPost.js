@@ -28,10 +28,11 @@ const EditPost = ({ post, setPost }) => {
   };
   useEffect(() => {
     formRef.current.setFieldsValue({ username: post.poster.username });
-    console.log("change");
+    
   }, [post]);
   useEffect(() => {
     form.setFieldsValue(currentPost);
+    console.log("change",currentPost);
   }, [currentPost]);
 
   const setUser = (value) => {
@@ -68,7 +69,7 @@ const EditPost = ({ post, setPost }) => {
           >
             <DatePicker
               defaultValue={moment(
-                currentPost?.createdAt ?? moment(),
+                moment(currentPost?.createAt??moment()).format(DATE_FORMAT),
                 DATE_FORMAT
               )}
               disabled={true}

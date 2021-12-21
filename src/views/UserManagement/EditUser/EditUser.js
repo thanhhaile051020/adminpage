@@ -1,13 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useImperativeHandle ,forwardRef} from "react";
 import moment from "moment";
 // react-bootstrap components
 import { DATE_FORMAT } from "util/index";
 import { Button, Form, Row, Col, Input, Switch, DatePicker, Tabs } from "antd";
 import UserList from "views/UserManagement/UserList";
-import {changeStatusUser} from "store/user/user.action"
+import { changeStatusUser } from "store/user/user.action";
 import { useDispatch } from "react-redux";
 import "./style.scss";
-const EditUser = ({ user }) => {
+const EditUser = forwardRef(({ user }, ref) => {
+  useImperativeHandle(ref, () => ({
+    getFormValue() {
+      return { fullName: form.getFieldValue("fullName")??'' };
+    },
+  }));
   const { TabPane } = Tabs;
   const dispatch = useDispatch();
   const formRef = useRef();
@@ -126,5 +131,5 @@ const EditUser = ({ user }) => {
       </Form.Item> */}
     </Form>
   );
-};
+});
 export default EditUser;

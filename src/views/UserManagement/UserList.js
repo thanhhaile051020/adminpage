@@ -4,7 +4,8 @@ import Dialog from "components/Dialog/index";
 import { Switch } from "antd";
 import { Table, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-
+import { EditOutlined } from "@ant-design/icons";
+import { sortAlphabet } from "util/index";
 const UserList = ({
   type = "none",
   setUser,
@@ -20,24 +21,52 @@ const UserList = ({
       title: "ID",
       dataIndex: "_id",
       key: "_id",
+      sorter: (a, b) => a._id.toLowerCase().localeCompare(b._id.toLowerCase()),
     },
     {
-      title: "Name",
+      title: "Username",
       dataIndex: "username",
       key: "username",
+      sorter: (a, b) =>
+        a.username.toLowerCase().localeCompare(b.username.toLowerCase()),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      sorter: (a, b) =>
+        a.email.toLowerCase().localeCompare(b.email.toLowerCase()),
     },
     {
-      title: "Full name",
+      title: "Tên đầy đủ",
       dataIndex: "fullName",
       key: "fullName",
+      sorter: (a, b) =>
+        a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase()),
     },
     {
-      title: "Action",
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      render: (text, record) => (
+        <Space size="middle">
+          <span>{text == "1" ? "Hoạt động" : "Không hoạt động"}</span>
+        </Space>
+      ),
+      filters: [
+        {
+          text: "Ẩn",
+          value: 1,
+        },
+        {
+          text: "Hoạt động",
+          value: 0,
+        },
+      ],
+      onFilter: (value, record) => record.status != value,
+    },
+    {
+      title: "Chức năng",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -53,7 +82,7 @@ const UserList = ({
               }
             }}
           >
-            View
+            <EditOutlined />
           </a>
           <Switch
             checked={record.status === 1 ? true : false}
@@ -82,9 +111,9 @@ const UserList = ({
     },
   ];
 
-  useEffect(()=>{
-    console.log('listUsers',listUsers)
-  },[listUsers])
+  useEffect(() => {
+    console.log("listUsers", listUsers);
+  }, [listUsers]);
 
   return (
     <>
@@ -94,7 +123,6 @@ const UserList = ({
           columns={columns}
           scroll={{ y: type == "none" ? -1 : 300 }}
         ></Table>
-       
       </div>
     </>
   );
