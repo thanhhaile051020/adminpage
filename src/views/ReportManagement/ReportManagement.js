@@ -51,7 +51,6 @@ const ReportManagementPost = ({ match }) => {
     getReport();
   }, []);
 
-
   const getReport = async () => {
     let data = await axios.get(
       `${HTTP_CONNECT}/admin/getRepostsUser`,
@@ -70,23 +69,22 @@ const ReportManagementPost = ({ match }) => {
   useEffect(() => {
     onSearch();
   }, [keySearch]);
-
   const reportReason = (type) => {
     switch (type) {
       case 1:
-        return "Giả mạo người khác";
+        return "Pretending to be someone";
       case 2:
-        return "Spam hoặc gây hại";
+        return "Spam or harmful";
       case 3:
-        return "Không dùng tên thật";
+        return "Not using a real name";
       case 4:
-        return "Đăng nội dung không phù hợp";
+        return "Posting inappropriate things";
       case 5:
-        return "Quấy rối hoặc bắt nạt";
+        return "Harassment or bullying";
       case 6:
-        return "Vấn đề khác";
+        return "Something else";
       default:
-        return "Vấn đề khác";
+        return "Something else";
     }
   };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -201,7 +199,7 @@ const ReportManagementPost = ({ match }) => {
       ),
     },
     {
-      title: "Lý do",
+      title: "Reason for reporting",
       key: "type",
       // ellipsis: {
       //   showTitle: true,
@@ -219,12 +217,12 @@ const ReportManagementPost = ({ match }) => {
       ),
     },
     {
-      title: "Bổ sung",
+      title: "Additional",
       dataIndex: "content",
       key: "content",
     },
     {
-      title: "Created At",
+      title: "Created at",
       dataIndex: "createAt",
       key: "createAt",
       render: (createAt) => (

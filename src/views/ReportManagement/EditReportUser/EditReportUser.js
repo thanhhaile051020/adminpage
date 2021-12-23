@@ -110,7 +110,7 @@ const EditPost = ({ report, setReport }) => {
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item label="Created At">
+          <Form.Item label="Created at">
             <DatePicker
               defaultValue={moment(
                 moment(report?.createAt ?? moment()).format(DATE_FORMAT),

@@ -74,15 +74,12 @@ const ReportManagementPost = ({ match }) => {
       key: "_id",
     },
     {
-      title: "Lý do",
+      title: "Reason for reporting",
       key: "type",
-      render: (text, record) => (
-        <div>{reportReason(+record.type)}</div>
-      ),
-
+      render: (text, record) => <div>{reportReason(+record.type)}</div>,
     },
     {
-      title: "Bổ sung",
+      title: "Additional",
       dataIndex: "content",
       key: "content",
     },
@@ -94,7 +91,7 @@ const ReportManagementPost = ({ match }) => {
       ),
     },
     {
-      title: "Created At",
+      title: "Created at",
       dataIndex: "createAt",
       key: "createAt",
       render: (createAt) => (
@@ -110,7 +107,7 @@ const ReportManagementPost = ({ match }) => {
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
-        <div>{status===0?"Pending":"Approved"}</div>
+        <div>{status === 0 ? "Pending" : "Approved"}</div>
       ),
     },
     // {

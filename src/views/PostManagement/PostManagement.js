@@ -215,7 +215,7 @@ const PostManagement = ({ match }) => {
       ),
     },
     {
-      title: "Created At",
+      title: "Created at",
       dataIndex: "createAt",
       key: "createAt",
       sorter: (a, b) => moment(a.createAt).isAfter(b.createAt),
