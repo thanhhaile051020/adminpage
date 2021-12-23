@@ -89,7 +89,7 @@ const EditUser = forwardRef(({ user }, ref) => {
         </Col>
         <Col span={8}>
           <Form.Item
-            label="Ngày tạo"
+            label="Created At"
 
             // name="createdAt"
           >
@@ -102,7 +102,7 @@ const EditUser = forwardRef(({ user }, ref) => {
           </Form.Item>
         </Col>
         <Col span={8} style={{ flex: "none" }}>
-          <Form.Item label="Trạng thái">
+          <Form.Item label="Status">
             <Switch
               checked={status}
               onChange={(checked) => handleChangeStatus(checked)}

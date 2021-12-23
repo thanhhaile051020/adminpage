@@ -45,7 +45,7 @@ const UserList = ({
         a.fullName.toLowerCase().localeCompare(b.fullName.toLowerCase()),
     },
     {
-      title: "Trạng thái",
+      title: "Status",
       dataIndex: "status",
       key: "status",
       render: (text, record) => (

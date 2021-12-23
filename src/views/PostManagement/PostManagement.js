@@ -215,7 +215,7 @@ const PostManagement = ({ match }) => {
       ),
     },
     {
-      title: "Ngày tạo",
+      title: "Created At",
       dataIndex: "createAt",
       key: "createAt",
       sorter: (a, b) => moment(a.createAt).isAfter(b.createAt),
@@ -243,7 +243,7 @@ const PostManagement = ({ match }) => {
       ),
     },
     {
-      title: "Trạng thái",
+      title: "Status",
       dataIndex: "status",
       key: "status",
       render: (text, record) => (

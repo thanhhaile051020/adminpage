@@ -94,7 +94,7 @@ const ReportManagementPost = ({ match }) => {
       ),
     },
     {
-      title: "Ngày tạo",
+      title: "Created At",
       dataIndex: "createAt",
       key: "createAt",
       render: (createAt) => (
@@ -106,11 +106,11 @@ const ReportManagementPost = ({ match }) => {
       ),
     },
     {
-      title: "Trạng thái",
+      title: "Status",
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
-        <div>{status===0?"Chờ duyệt":"Đã duyệt"}</div>
+        <div>{status===0?"Pending":"Approved"}</div>
       ),
     },
     // {
@@ -133,19 +133,19 @@ const ReportManagementPost = ({ match }) => {
   const reportReason = (type) => {
     switch (type) {
       case 1:
-        return "Thông tin sai sự thật";
+        return "False information";
       case 2:
-        return "Bạo lực";
+        return "Violence";
       case 3:
-        return "Quấy rối";
+        return "Nudity";
       case 4:
         return "Spam";
       case 5:
-        return "Ngôn ngữ gây thù ghét";
+        return "Hate speech";
       case 6:
-        return "Bán hàng trái phép";
+        return "Unauthorised sales";
       default:
-        return "Vấn đề khác";
+        return "Something else";
     }
   };
   return (

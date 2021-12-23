@@ -55,19 +55,19 @@ const EditPost = ({ report, setReport }) => {
   const reportReason = (type) => {
     switch (type) {
       case 1:
-        return "Giả mạo người khác";
+        return "Pretending to be someone";
       case 2:
-        return "Spam hoặc gây hại";
+        return "Spam or harmful";
       case 3:
-        return "Không dùng tên thật";
+        return "Not using a real name";
       case 4:
-        return "Đăng nội dung không phù hợp";
+        return "Posting inappropriate things";
       case 5:
-        return "Quấy rối hoặc bắt nạt";
+        return "Harassment or bullying";
       case 6:
-        return "Vấn đề khác";
+        return "Something else";
       default:
-        return "Vấn đề khác";
+        return "Something else";
     }
   };
   // useEffect(() => {
@@ -105,12 +105,12 @@ const EditPost = ({ report, setReport }) => {
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item label="Người báo cáo" name="report.userReport.username">
+          <Form.Item label="Reporter" name="report.userReport.username"  onClick={() => history.push(`/admin/table/${report.userReport._id}`)}>
             <Input disabled={true} value={report.userReport.username} />
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item label="Ngày tạo">
+          <Form.Item label="Created At">
             <DatePicker
               defaultValue={moment(
                 moment(report?.createAt ?? moment()).format(DATE_FORMAT),
@@ -127,7 +127,7 @@ const EditPost = ({ report, setReport }) => {
       <Row gutter={24}>
         <Col span={8}>
           <Form.Item
-            label="Người bị báo cáo"
+            label="Reported User"
             name="report.user.username"
             onClick={() => history.push(`/admin/table/${report.user._id}`)}
           >

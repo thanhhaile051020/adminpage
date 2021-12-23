@@ -224,7 +224,7 @@ const ReportManagementPost = ({ match }) => {
       key: "content",
     },
     {
-      title: "Ngày tạo",
+      title: "Created At",
       dataIndex: "createAt",
       key: "createAt",
       render: (createAt) => (
@@ -236,11 +236,11 @@ const ReportManagementPost = ({ match }) => {
       ),
     },
     {
-      title: "Trạng thái",
+      title: "Status",
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
-        <div>{status === 0 ? "Chờ duyệt" : "Đã duyệt"}</div>
+        <div>{status === 0 ? "Pending" : "Approved"}</div>
       ),
     },
     {

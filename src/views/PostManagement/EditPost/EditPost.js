@@ -63,7 +63,7 @@ const EditPost = ({ post, setPost }) => {
         </Col>
         <Col span={8}>
           <Form.Item
-            label="Ngày tạo"
+            label="Created At"
 
             // name="createdAt"
           >
@@ -81,7 +81,7 @@ const EditPost = ({ post, setPost }) => {
       </Row>
       <Row gutter={24}>
         <Col span={8} style={{ flex: "none" }}>
-          <Form.Item label="Trạng thái">
+          <Form.Item label="Status">
             <Switch
               checked={status }
               onChange={(checked) => {
