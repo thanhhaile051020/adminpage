@@ -38,7 +38,7 @@ const UserList = ({
         a.email.toLowerCase().localeCompare(b.email.toLowerCase()),
     },
     {
-      title: "Tên đầy đủ",
+      title: "Fullname",
       dataIndex: "fullName",
       key: "fullName",
       sorter: (a, b) =>

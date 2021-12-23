@@ -83,8 +83,8 @@ const EditUser = forwardRef(({ user }, ref) => {
       </Row>
       <Row gutter={24}>
         <Col span={8}>
-          <Form.Item label="Tên đầy đủ" name="fullName">
-            <Input placeholder="Tên đầy đủ" />
+          <Form.Item label="Fullname" name="fullName">
+            <Input placeholder="Fullname" />
           </Form.Item>
         </Col>
         <Col span={8}>

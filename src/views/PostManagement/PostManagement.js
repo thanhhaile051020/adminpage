@@ -189,7 +189,7 @@ const PostManagement = ({ match }) => {
       sorter: (a, b) => a._id.toLowerCase().localeCompare(b._id.toLowerCase()),
     },
     {
-      title: "Tên người dùng",
+      title: "Username",
       key: "posterId",
       sorter: (a, b) =>
         a.poster.username
@@ -202,7 +202,7 @@ const PostManagement = ({ match }) => {
       ),
     },
     {
-      title: "Nội dung",
+      title: "Content",
       dataIndex: "text",
       key: "text",
       ellipsis: {

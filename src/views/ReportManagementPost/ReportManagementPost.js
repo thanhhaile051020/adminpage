@@ -110,22 +110,22 @@ const ReportManagementPost = ({ match }) => {
         <div>{status === 0 ? "Pending" : "Approved"}</div>
       ),
     },
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   render: (text, record) => (
-    //     <Space size="middle">
-    //       <a
-    //         onClick={() => {
-    //           setShowModal(true);
-    //           setCurrentReportPost(record);
-    //         }}
-    //       >
-    //         View
-    //       </a>
-    //     </Space>
-    //   ),
-    // },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <a
+            onClick={() => {
+              setShowModal(true);
+              setCurrentReportPost(record);
+            }}
+          >
+            View
+          </a>
+        </Space>
+      ),
+    },
   ];
   const reportReason = (type) => {
     switch (type) {
@@ -169,7 +169,7 @@ const ReportManagementPost = ({ match }) => {
           </Col>
         </Row>
         <Dialog size="lg" showModal={showModal} setShowModal={setShowModal}>
-          <EditReportPost reportPost={currentReportPost} />
+          <EditReportPost report={currentReportPost} />
         </Dialog>
       </Container>
     </>

@@ -101,7 +101,7 @@ const EditPost = ({ post, setPost }) => {
       </Row>
       <Row gutter={24}>
         <Col span={16}>
-          <Form.Item label="Nội dung" name="text">
+          <Form.Item label="Content" name="text">
             <TextArea rows={4} placeholder="Id User" />
           </Form.Item>
         </Col>
