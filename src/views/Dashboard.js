@@ -47,7 +47,7 @@ function Dashboard() {
 
   useEffect(() => {
     getActivityToday();
-  });
+  },[]);
 
   const getActivityToday = async () => {
     let result = await axios.post(
@@ -80,7 +80,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats" onClick={getActivityToday()}>
+                <div style={{cursor:"pointer"}} className="stats" onClick={getActivityToday()}>
                   <i className="fas fa-redo mr-1"></i>
                   Update now
                 </div>
@@ -100,7 +100,7 @@ function Dashboard() {
                     <RangePicker onChange={getChartData} format={DATE_FORMAT} />
                   </Space>
                 </div>
-                ,
+                
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart" id="chartHours">
