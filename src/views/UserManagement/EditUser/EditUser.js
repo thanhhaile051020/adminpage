@@ -163,7 +163,7 @@ const EditUser = forwardRef(({ user }, ref) => {
       </Row>
       {/* <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
-         Cập nhật
+         Update
         </Button>
       </Form.Item> */}
     </Form>

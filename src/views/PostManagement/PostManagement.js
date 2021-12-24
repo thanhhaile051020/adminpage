@@ -321,7 +321,7 @@ const PostManagement = ({ match }) => {
       ),
     },
     {
-      title: "Ngày cập nhật",
+      title: "Updated At",
       dataIndex: "upateAt",
       key: "updateAt",
       sorter: (a, b) => moment(a.createAt).isAfter(b.createAt),
@@ -339,7 +339,7 @@ const PostManagement = ({ match }) => {
       key: "status",
       render: (text, record) => (
         <Space size="middle">
-          <span>{text == "1" ? "Hoạt động" : "Không hoạt động"}</span>
+          <span>{text == "1" ? "Activated" : "Not Activated"}</span>
         </Space>
       ),
       filters: [
@@ -348,7 +348,7 @@ const PostManagement = ({ match }) => {
           value: 1,
         },
         {
-          text: "Hoạt động",
+          text: "Activated",
           value: 0,
         },
       ],

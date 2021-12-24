@@ -33,7 +33,7 @@ const Dialog = (props) => {
             props.onSubmit();
           }}
         >
-          Cập nhật
+          Update
         </Button>
       </div>
     </Modal>

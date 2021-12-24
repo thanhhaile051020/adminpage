@@ -173,7 +173,7 @@ const EditPost = ({ report, setReport }) => {
 
       {/* <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
-         Cập nhật
+         Update
         </Button>
       </Form.Item> */}
     </Form>

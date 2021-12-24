@@ -142,7 +142,7 @@ const UserList = ({
       key: "status",
       render: (text, record) => (
         <Space size="middle">
-          <span>{text == "1" ? "Hoạt động" : "Không hoạt động"}</span>
+          <span>{text == "1" ? "Activated" : "Not Activated"}</span>
         </Space>
       ),
       filters: [
@@ -151,7 +151,7 @@ const UserList = ({
           value: 1,
         },
         {
-          text: "Hoạt động",
+          text: "Activated",
           value: 0,
         },
       ],
