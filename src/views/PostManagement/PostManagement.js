@@ -339,16 +339,16 @@ const PostManagement = ({ match }) => {
       key: "status",
       render: (text, record) => (
         <Space size="middle">
-          <span>{text == "1" ? "Activated" : "Not Activated"}</span>
+          <span>{text == 1 ? "Activated" : "Not Activated"}</span>
         </Space>
       ),
       filters: [
         {
-          text: "Ẩn",
+          text: "Activated",
           value: 1,
         },
         {
-          text: "Activated",
+          text: "NotActivated",
           value: 0,
         },
       ],
