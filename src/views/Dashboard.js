@@ -72,7 +72,7 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Followers</p>
+                      <p className="card-category">Activities</p>
                       <Card.Title as="h4">{currentDayActivity+"+"}</Card.Title>
                     </div>
                   </Col>
@@ -80,7 +80,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
+                <div className="stats" onClick={getActivityToday()}>
                   <i className="fas fa-redo mr-1"></i>
                   Update now
                 </div>
