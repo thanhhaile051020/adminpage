@@ -33,6 +33,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
+        <Route path="/login" render={(props) => <Login {...props} />} />
         <Route
           path="/admin"
           render={(props) => {
@@ -42,7 +43,6 @@ ReactDOM.render(
             return <Redirect to="/login" />;
           }}
         />
-        <Route path="/login" render={(props) => <Login {...props} />} />
         <Redirect from="/" to="/admin/dashboard" />
       </Switch>
     </BrowserRouter>
