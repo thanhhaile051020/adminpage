@@ -25,12 +25,8 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("adminToken") != "")
-      history.push("/admin/table/:keySearch");
-    else{
-      history.push("/login");
-    }
-  },[]);
+    localStorage.setItem("adminToken", "");
+  }, []);
 
   return (
     <Form
