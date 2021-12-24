@@ -27,16 +27,25 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import store from "./store/index.js";
 import { Provider } from "react-redux";
-import AdminLayout from "layouts/Admin.js"; 
-
+import AdminLayout from "layouts/Admin.js";
+import Login from "views/auth/index";
 ReactDOM.render(
   <Provider store={store}>
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </BrowserRouter>
+    <BrowserRouter>
+      <Switch>
+        <Route
+          path="/admin"
+          render={(props) => {
+            if (localStorage.getItem("adminToken")) {
+              return <AdminLayout {...props} />;
+            }
+            return <Redirect to="/login" />;
+          }}
+        />
+        <Route path="/login" render={(props) => <Login {...props} />} />
+        <Redirect from="/" to="/admin/dashboard" />
+      </Switch>
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

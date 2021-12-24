@@ -35,7 +35,7 @@ function Admin() {
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/admin"||prop.layout === "/login") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -43,7 +43,8 @@ function Admin() {
             key={key}
           />
         );
-      } else {
+      } 
+      else {
         return null;
       }
     });

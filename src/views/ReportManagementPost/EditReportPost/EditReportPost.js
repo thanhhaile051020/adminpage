@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import moment from "moment";
+import { HTTP_CONNECT } from "config";
 // react-bootstrap components
-import { DATE_FORMAT, getUrlImage } from "util/index";
-import { Image, Form, Row, Col, Input, Switch, DatePicker } from "antd";
+import { DATE_FORMAT, getUrlImage, getConfig } from "util/index";
+import { Select, Form, Row, Col, Input, Switch, DatePicker } from "antd";
 import { useHistory } from "react-router";
 import UserList from "views/UserManagement/UserList";
-import EditPostComponent from "views/PostManagement/EditPost/EditPost"
+import EditPostComponent from "views/PostManagement/EditPost/EditPost";
 import "./style.scss";
+import axios from "axios";
 const EditPost = ({ report, setReport }) => {
+  const { Option } = Select;
   const history = useHistory();
   const { TextArea } = Input;
   const formRef = useRef();
@@ -31,6 +34,12 @@ const EditPost = ({ report, setReport }) => {
       span: 16,
     },
   };
+  const optionReport = [
+    <Option value={0}>Pending</Option>,
+    <Option value={1}>Unapproved</Option>,
+    <Option value={2}>Approved</Option>,
+  ];
+
   useEffect(() => {
     formRef.current.setFieldsValue({
       reason: report.type.map(
@@ -91,6 +100,15 @@ const EditPost = ({ report, setReport }) => {
   //   );
   // }, [reportReason]);
 
+  const handleChangeStatus = async (value) => {
+    let data = await axios.post(
+      `${HTTP_CONNECT}/admin/editReportPost`,
+      { reportId: report._id, data: { status: value } },
+      getConfig()
+    );
+    setReport(value);
+  };
+
   return (
     <Form
       form={form}
@@ -141,6 +159,17 @@ const EditPost = ({ report, setReport }) => {
             onClick={() => history.push(`/admin/table/${report.postId._id}`)}
           >
             <Input disabled={true} />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item label="Status" name="status">
+            <Select
+              className="select__option-report"
+              defaultValue={0}
+              onChange={handleChangeStatus}
+            >
+              {optionReport}
+            </Select>
           </Form.Item>
         </Col>
       </Row>

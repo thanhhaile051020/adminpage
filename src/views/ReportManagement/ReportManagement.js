@@ -238,7 +238,7 @@ const ReportManagementPost = ({ match }) => {
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
-        <div>{status === 0 ? "Pending" : "Approved"}</div>
+        <div>{status === 0 ? "Pending" :status === 1 ? "Unpproved":"Approved"}</div>
       ),
     },
     {
@@ -258,6 +258,14 @@ const ReportManagementPost = ({ match }) => {
       ),
     },
   ];
+
+  const editReport = (value) => {
+    let newListReportPost = listReportPost.map((report) => {
+      if (report._id == currentUser._id) report.status = value;
+      return report;
+    });
+    setListReportPost(newListReportPost)
+  };
 
   return (
     <>
@@ -283,7 +291,7 @@ const ReportManagementPost = ({ match }) => {
           </Col>
         </Row>
         <Dialog size="lg" showModal={showModal} setShowModal={setShowModal}>
-          <EditReportUser report={currentUser} />
+          <EditReportUser report={currentUser} setReport={editReport} />
         </Dialog>
       </Container>
     </>

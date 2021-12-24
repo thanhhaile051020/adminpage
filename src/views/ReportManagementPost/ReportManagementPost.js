@@ -22,6 +22,7 @@ import { Input, Space, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import EditReportPost from "./EditReportPost/EditReportPost";
 import Search from "components/Search/index";
+import { EditOutlined } from "@ant-design/icons";
 const ReportManagementPost = ({ match }) => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
@@ -107,7 +108,7 @@ const ReportManagementPost = ({ match }) => {
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
-        <div>{status === 0 ? "Pending" : "Approved"}</div>
+        <div>{status === 0 ? "Pending" :status === 1 ? "Unpproved":"Approved"}</div>
       ),
     },
     {
@@ -121,7 +122,7 @@ const ReportManagementPost = ({ match }) => {
               setCurrentReportPost(record);
             }}
           >
-            View
+            <EditOutlined />
           </a>
         </Space>
       ),
@@ -145,6 +146,15 @@ const ReportManagementPost = ({ match }) => {
         return "Something else";
     }
   };
+
+  const editReport = (value) => {
+    let newListReportPost = listReportPost.map((report) => {
+      if (report._id == currentReportPost._id) report.status = value;
+      return report;
+    });
+    setListReportPost(newListReportPost)
+  };
+
   return (
     <>
       <Container fluid>
@@ -169,7 +179,7 @@ const ReportManagementPost = ({ match }) => {
           </Col>
         </Row>
         <Dialog size="lg" showModal={showModal} setShowModal={setShowModal}>
-          <EditReportPost report={currentReportPost} />
+          <EditReportPost report={currentReportPost} setReport={editReport} />
         </Dialog>
       </Container>
     </>

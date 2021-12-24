@@ -1,0 +1,18 @@
+.auth{
+    &__container{
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color:#0cce83 ;
+    }
+    &__warrper{
+        background-color:#ffffff ;
+        width: 900px;
+        height: 500px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}

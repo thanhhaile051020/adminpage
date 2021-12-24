@@ -66,9 +66,10 @@ const UserList = ({
       onFilter: (value, record) => record.status != value,
     },
     {
-      title: "Chức năng",
+      title: "Action",
       key: "action",
       render: (text, record) => (
+        <>
         <Space size="middle">
           <a
             onClick={() => {
@@ -107,6 +108,7 @@ const UserList = ({
             View
           </a> */}
         </Space>
+        </>
       ),
     },
   ];
@@ -120,7 +122,7 @@ const UserList = ({
       <div>
         <Table
           dataSource={listUsers}
-          columns={columns}
+          columns={type!="modal"? columns:columns.slice(0,columns.length-1)}
           scroll={{ y: type == "none" ? -1 : 300 }}
         ></Table>
       </div>

@@ -18,10 +18,11 @@
 import React, { Component } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
-
+import { useHistory } from "react-router-dom";
 import routes from "routes.js";
 
 function Header() {
+  let history = useHistory();
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -137,7 +138,7 @@ function Header() {
             </Nav.Item>
           </Nav>
           <Nav className="ml-auto" navbar>
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link
                 className="m-0"
                 href="#pablo"
@@ -146,7 +147,7 @@ function Header() {
                 <span className="no-icon">Account</span>
               </Nav.Link>
             </Nav.Item>
-            {/* <Dropdown as={Nav.Item}>
+            <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
                 aria-expanded={false}
                 aria-haspopup={true}
@@ -198,7 +199,15 @@ function Header() {
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
-                <span className="no-icon">Log out</span>
+                <span
+                  className="no-icon"
+                  onClick={async () => {
+                    await localStorage.setItem("adminToken", "");
+                    history.push("/login");
+                  }}
+                >
+                  Log out
+                </span>
               </Nav.Link>
             </Nav.Item>
           </Nav>

@@ -102,7 +102,7 @@ const EditPost = ({ post, setPost }) => {
       <Row gutter={24}>
         <Col span={16}>
           <Form.Item label="Content" name="text">
-            <TextArea rows={4} placeholder="Id User" />
+            <TextArea disabled={true} rows={4} placeholder="Id User" />
           </Form.Item>
         </Col>
       </Row>

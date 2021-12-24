@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import moment from "moment";
+import { HTTP_CONNECT } from "config";
 // react-bootstrap components
-import { DATE_FORMAT, getUrlImage } from "util/index";
-import { Image, Form, Row, Col, Input, Switch, DatePicker } from "antd";
+import { DATE_FORMAT, getConfig } from "util/index";
+import { Image, Form, Row, Col, Input, Select, DatePicker } from "antd";
 import { useHistory } from "react-router";
 import UserList from "views/UserManagement/UserList";
+import axios from "axios";
 import "./style.scss";
 const EditPost = ({ report, setReport }) => {
   const history = useHistory();
+  const { Option } = Select;
   const { TextArea } = Input;
   const formRef = useRef();
   const [form] = Form.useForm();
@@ -52,6 +55,13 @@ const EditPost = ({ report, setReport }) => {
     form.resetFields();
     setCurrentPost(value);
   };
+
+  const optionReport = [
+    <Option value={0}>Pending</Option>,
+    <Option value={1}>Unapproved</Option>,
+    <Option value={2}>Approved</Option>,
+  ];
+
   const reportReason = (type) => {
     switch (type) {
       case 1:
@@ -87,7 +97,14 @@ const EditPost = ({ report, setReport }) => {
   //     })
   //   );
   // }, [reportReason]);
-
+  const handleChangeStatus = async (value) => {
+    let data = await axios.post(
+      `${HTTP_CONNECT}/admin/editReportUser`,
+      { reportId: report._id, data: { status: value } },
+      getConfig()
+    );
+    setReport(value);
+  };
   return (
     <Form
       form={form}
@@ -132,6 +149,17 @@ const EditPost = ({ report, setReport }) => {
             onClick={() => history.push(`/admin/table/${report.user._id}`)}
           >
             <Input disabled={true} />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item label="Status" name="status">
+            <Select
+              className="select__option-report"
+              defaultValue={0}
+              onChange={handleChangeStatus}
+            >
+              {optionReport}
+            </Select>
           </Form.Item>
         </Col>
       </Row>

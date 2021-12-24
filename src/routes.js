@@ -19,6 +19,7 @@ import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserProfile.js";
 import PostManagement from "views/PostManagement/PostManagement";
 import UserList from "views/UserManagement/UserManagement";
+import Login from "views/auth/Login";
 import ReportManagementPost from "views/ReportManagementPost/ReportManagementPost";
 import ReportManagement from "views/ReportManagement/ReportManagement";
 import Typography from "views/Typography.js";
@@ -58,6 +59,13 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-notes",
+    component: Login,
+    layout: "/login",
+  },
+  {
     path: "/reportpost/:keySearch",
     name: "Post Report",
     icon: "nc-icon nc-notes",
@@ -73,7 +81,7 @@ const dashboardRoutes = [
   },
   {
     path: "/postmanagement/:keySearch",
-    name: "POST MANAGEMENT",
+    name: "Post Management",
     icon: "nc-icon nc-notes",
     component: PostManagement,
     layout: "/admin",

@@ -41,17 +41,15 @@ function Sidebar({ color, image, routes }) {
             href="https://www.creative-tim.com?ref=lbd-sidebar"
             className="simple-text logo-mini mx-1"
           >
-            <div className="logo-img">
-              
-            </div>
+            <div className="logo-img"></div>
           </a>
           <a className="simple-text" href="http://www.creative-tim.com">
-           ADMIN
+            ADMIN
           </a>
         </div>
         <Nav>
           {routes.map((prop, key) => {
-            if (!prop.redirect)
+            if (!prop.redirect && prop.layout === "/admin")
               return (
                 <li
                   className={
