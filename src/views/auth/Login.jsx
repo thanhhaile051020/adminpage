@@ -10,7 +10,7 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       const res = await axios.post(
-        `${HTTP_CONNECT}/auth/login`,
+        `${HTTP_CONNECT}/auth/loginAdmin`,
         values,
         getConfig()
       );

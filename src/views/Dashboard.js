@@ -16,46 +16,78 @@ import {
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-import { DatePicker, Space } from "antd";
+import { DatePicker, Space, Select, Tabs } from "antd";
 
 const { RangePicker } = DatePicker;
 import axios from "axios";
 import { HTTP_CONNECT } from "config";
 import { getConfig, DATE_FORMAT } from "util/index";
+import UserActivities from "views/Chart/UserActivities/UserActivities";
 function Dashboard() {
+  const { Option } = Select;
+  const { TabPane } = Tabs;
   const [dataChart, setDataChart] = useState([]);
   const [countMax, setCountMax] = useState(1);
   const [dateChart, setDateChart] = useState([]);
   const [currentDayActivity, setCurrentDayActivity] = useState(0);
+  const [currentDayCheckIn, setCurrentDayCheckIn] = useState(0);
+  const [currentNewUser, setCurrentNewUser] = useState(0);
+  const [rangeTypeTime, setRangeTypeTime] = useState("day");
+  const [dateArray, setDateArray] = useState([]);
+  const [defaultDate, setDefaultDate] = useState([
+    moment().clone().startOf("month"),
+    moment().clone().startOf("month"),
+  ]);
   const getChartData = async (value) => {
-    if (value == null) return;
+    if (value == null) {
+      setDateArray([]);
+      return;
+    }
     console.log(value);
+    let formatDateArray = [
+      value[0].clone().startOf(rangeTypeTime),
+      value[1].clone().endOf(rangeTypeTime),
+    ];
+    console.log(formatDateArray);
+    setDateArray(formatDateArray);
     let result = await axios.post(
       `${HTTP_CONNECT}/admin/getDataChartUser`,
-      { fromTime: value[0], toTime: value[1] },
+      { fromTime: value[0], toTime: value[1], type: rangeTypeTime },
       getConfig()
     );
     setDataChart(result.data.data);
     setCountMax(result.data.countMax);
     console.log(moment(result.data.data[0].day).format(DATE_FORMAT).toString());
-    // let newDateChart = result.data.data.map((day) =>
-    //   moment(day).format(DATE_FORMAT).toString()
-    // );
-    // setDateChart(newDateChart)
   };
   useEffect(() => {}, [dataChart]);
 
   useEffect(() => {
     getActivityToday();
-  },[]);
+    getCheckInToday();
+    getNewUserCreated();
+  }, []);
 
   const getActivityToday = async () => {
     let result = await axios.post(
       `${HTTP_CONNECT}/admin/getDataChartUser`,
-      { fromTime: moment().subtract(1, "days"), toTime: moment() },
+      { fromTime: moment(), toTime: moment(), type: "day" },
       getConfig()
     );
     setCurrentDayActivity(result.data.count);
+  };
+  const getCheckInToday = async () => {
+    let result = await axios.get(
+      `${HTTP_CONNECT}/admin/getDataChartUserActivity`,
+      getConfig()
+    );
+    setCurrentDayCheckIn(result.data.data);
+  };
+  const getNewUserCreated = async () => {
+    let result = await axios.get(
+      `${HTTP_CONNECT}/admin/getDataChartUserNew`,
+      getConfig()
+    );
+    setCurrentNewUser(result.data.data);
   };
   return (
     <>
@@ -72,15 +104,81 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Activities</p>
-                      <Card.Title as="h4">{currentDayActivity+"+"}</Card.Title>
+                      <p className="card-category">Activities Today</p>
+                      <Card.Title as="h4">
+                        {currentDayActivity + "+"}
+                      </Card.Title>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div style={{cursor:"pointer"}} className="stats" onClick={getActivityToday()}>
+                <div
+                  style={{ cursor: "pointer" }}
+                  className="stats"
+                  onClick={() => getActivityToday()}
+                >
+                  <i className="fas fa-redo mr-1"></i>
+                  Update now
+                </div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col xs="5">
+                    <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-spaceship text-success"></i>
+                    </div>
+                  </Col>
+                  <Col xs="7">
+                    <div className="numbers">
+                      <p className="card-category">Visiter Today</p>
+                      <Card.Title as="h4">{currentDayCheckIn}</Card.Title>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => getCheckInToday()}
+                  className="stats"
+                >
+                  <i className="fas fa-redo mr-1"></i>
+                  Update now
+                </div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col xs="5">
+                    <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-single-02 text-warning"></i>
+                    </div>
+                  </Col>
+                  <Col xs="7">
+                    <div className="numbers">
+                      <p className="card-category">New Users Today</p>
+                      <Card.Title as="h4">{currentNewUser + "+"}</Card.Title>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => getNewUserCreated()}
+                  className="stats"
+                >
                   <i className="fas fa-redo mr-1"></i>
                   Update now
                 </div>
@@ -88,76 +186,12 @@ function Dashboard() {
             </Card>
           </Col>
         </Row>
-        <Row>
-          <Col md="12">
-            <Card>
-              <Card.Header>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Card.Title as="h4">Users Behavior</Card.Title>{" "}
-                  <Space direction="horizontal" size={12}>
-                    <RangePicker onChange={getChartData} format={DATE_FORMAT} />
-                  </Space>
-                </div>
-                
-              </Card.Header>
-              <Card.Body>
-                <div className="ct-chart" id="chartHours">
-                  <ChartistGraph
-                    data={{
-                      labels: dataChart?.map((data) =>
-                        moment(data.day).format("DD/MM").toString()
-                      ),
-                      series: [
-                        dataChart?.map((data) => data.like),
-                        dataChart?.map((data) => data.comment),
-                      ],
-                    }}
-                    type="Line"
-                    options={{
-                      low: 0,
-                      high: { countMax },
-                      showArea: false,
-                      height: "245px",
-                      axisX: {
-                        showGrid: false,
-                      },
-                      lineSmooth: true,
-                      showLine: true,
-                      showPoint: true,
-                      fullWidth: true,
-                      chartPadding: {
-                        right: 50,
-                      },
-                    }}
-                    responsiveOptions={[
-                      [
-                        "screen and (max-width: 640px)",
-                        {
-                          axisX: {
-                            labelInterpolationFnc: function (value) {
-                              return value[0];
-                            },
-                          },
-                        },
-                      ],
-                    ]}
-                  />
-                </div>
-              </Card.Body>
-              <Card.Footer>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>
-                  Like <i className="fas fa-circle text-danger"></i>
-                  Comment
-                </div>
-                <hr></hr>
-              </Card.Footer>
-            </Card>
-          </Col>
-         
-        </Row>
+        <Tabs defaultActiveKey="1" style={{ width: "100%" }}>
+          <TabPane tab="Users Behavior" key="1">
+            <UserActivities />
+          </TabPane>
+          <TabPane tab="Users Activity" key="2"></TabPane>
+        </Tabs>
       </Container>
     </>
   );

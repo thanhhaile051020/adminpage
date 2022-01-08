@@ -37,13 +37,13 @@ const dashboardRoutes = [
   //   component: Upgrade,
   //   layout: "/admin",
   // },
-  // {
-  //   path: "/dashboard",
-  //   name: "Dashboard",
-  //   icon: "nc-icon nc-chart-pie-35",
-  //   component: Dashboard,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "nc-icon nc-chart-pie-35",
+    component: Dashboard,
+    layout: "/admin",
+  },
   // {
   //   path: "/user",
   //   name: "User Profile",
@@ -93,13 +93,13 @@ const dashboardRoutes = [
   //   component: Typography,
   //   layout: "/admin",
   // },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "nc-icon nc-atom",
-  //   component: Icons,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/icons",
+    name: "Icons",
+    icon: "nc-icon nc-atom",
+    component: Icons,
+    layout: "/admin",
+  },
   // {
   //   path: "/maps",
   //   name: "Maps",
