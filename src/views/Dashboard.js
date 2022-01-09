@@ -187,10 +187,10 @@ function Dashboard() {
           </Col>
         </Row>
         <Tabs defaultActiveKey="1" style={{ width: "100%" }}>
-          <TabPane tab="Users Behavior" key="1">
+          <TabPane tab="Users Activity" key="1">
             <UserActivities />
           </TabPane>
-          <TabPane tab="Users Activity" key="2"></TabPane>
+          <TabPane tab="Users Behavior" key="2"></TabPane>
         </Tabs>
       </Container>
     </>
