@@ -23,6 +23,7 @@ import axios from "axios";
 import { HTTP_CONNECT } from "config";
 import { getConfig, DATE_FORMAT } from "util/index";
 import UserActivities from "views/Chart/UserActivities/UserActivities";
+import UserReact from "views/Chart/UserReact/UserReact";
 function Dashboard() {
   const { Option } = Select;
   const { TabPane } = Tabs;
@@ -131,6 +132,38 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-paper-2 text-info"></i>
+                    </div>
+                  </Col>
+                  <Col xs="7">
+                    <div className="numbers">
+                      <p className="card-category">Posts Today</p>
+                      <Card.Title as="h4">
+                        {1 + "+"}
+                      </Card.Title>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div
+                  style={{ cursor: "pointer" }}
+                  className="stats"
+                  onClick={() => getActivityToday()}
+                >
+                  <i className="fas fa-redo mr-1"></i>
+                  Update now
+                </div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col xs="5">
+                    <div className="icon-big text-center icon-warning">
                       <i className="nc-icon nc-spaceship text-success"></i>
                     </div>
                   </Col>
@@ -190,7 +223,10 @@ function Dashboard() {
           <TabPane tab="Users Activity" key="1">
             <UserActivities />
           </TabPane>
-          <TabPane tab="Users Behavior" key="2"></TabPane>
+          <TabPane tab="Users Behavior" key="2">
+            {" "}
+            <UserReact />
+          </TabPane>
         </Tabs>
       </Container>
     </>

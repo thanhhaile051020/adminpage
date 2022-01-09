@@ -7,6 +7,7 @@ import ChartistGraph from "react-chartist";
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 const UserActivities = ({}) => {
   const [rangeTypeTime, setRangeTypeTime] = useState("day");
   const [defaultDate, setDefaultDate] = useState([
