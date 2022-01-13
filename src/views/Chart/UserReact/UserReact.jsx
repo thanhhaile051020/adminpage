@@ -1,5 +1,6 @@
 import { Card, Row, Col } from "react-bootstrap";
 import { Space, Select, DatePicker } from "antd";
+import $ from 'jquery';
 import axios from "axios";
 import { HTTP_CONNECT } from "config";
 import { getConfig, DATE_FORMAT } from "util/index";
@@ -9,7 +10,6 @@ import moment from "moment";
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 const UserReact = ({}) => {
-  
   const [rangeTypeTime, setRangeTypeTime] = useState("day");
   const [defaultDate, setDefaultDate] = useState([
     moment().clone().startOf("month"),
@@ -18,6 +18,7 @@ const UserReact = ({}) => {
   const [dateArray, setDateArray] = useState([]);
   const [dataChart, setDataChart] = useState([]);
   const [countMax, setCountMax] = useState(1);
+  const [labels, setLables] = useState([]);
   const getChartData = async (value) => {
     if (value == null) {
       setDateArray([]);
@@ -35,11 +36,21 @@ const UserReact = ({}) => {
       { fromTime: value[0], toTime: value[1], type: rangeTypeTime },
       getConfig()
     );
+    let dateChart=result.data.data
+    if (rangeTypeTime == "day") {
+      setLables(
+        dateChart?.map((data) => moment(data.day).format("DD/MM").toString())
+      );
+    } else if (rangeTypeTime == "month") {
+      setLables(dateChart?.map((data) => "Tháng " + (moment(data.day).month()+1)));
+    } else {
+      setLables(dateChart?.map((data) => "Năm " + moment(data.day).year()));
+    }
+   
     setDataChart(result.data.data);
     setCountMax(result.data.countMax);
-    console.log(moment(result.data.data[0].day).format(DATE_FORMAT).toString());
+    
   };
-  useEffect(() => {}, [dataChart]);
 
   return (
     <Row>
@@ -76,12 +87,11 @@ const UserReact = ({}) => {
             <div className="ct-chart" id="chartHours">
               <ChartistGraph
                 data={{
-                  labels: dataChart?.map((data) =>
-                    moment(data.day).format("DD/MM").toString()
-                  ),
+                  labels: labels,
                   series: [
                     dataChart?.map((data) => data.like),
                     dataChart?.map((data) => data.comment),
+                    dataChart?.map((data) => data.post),
                   ],
                 }}
                 type="Line"
@@ -121,6 +131,8 @@ const UserReact = ({}) => {
               <i className="fas fa-circle text-info"></i>
               Like <i className="fas fa-circle text-danger"></i>
               Comment
+              <i className="fas fa-circle text-success"></i>
+              Post
             </div>
             <hr></hr>
           </Card.Footer>

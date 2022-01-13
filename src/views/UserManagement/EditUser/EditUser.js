@@ -159,7 +159,6 @@ const EditUser = forwardRef(({ user }, ref) => {
             ></UserList>
           </TabPane>
         </Tabs>
-        ,
       </Row>
       {/* <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

@@ -1,9 +1,13 @@
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Dialog from "components/Dialog/index";
 // react-bootstrap components
-import { Table, Space ,Button,Input,Switch} from "antd";
+import { Table, Space, Button, Input, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { EditOutlined ,SearchOutlined} from "@ant-design/icons";
+import {
+  EditOutlined,
+  SearchOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 const UserList = ({
   type = "none",
@@ -12,10 +16,13 @@ const UserList = ({
   setShowModal,
   setCurrentUser,
   handleChangeStatus,
+  onDeleteUser
 }) => {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [userDelete, setUserDelete] = useState(null);
   const searchInput = useRef();
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -27,7 +34,7 @@ const UserList = ({
     clearFilters();
     setSearchText("");
   };
-  
+
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -142,7 +149,7 @@ const UserList = ({
       key: "status",
       render: (text, record) => (
         <Space size="middle">
-             <span>{text == 1 ? "Activated" : "Not Activated"}</span>
+          <span>{text == 1 ? "Activated" : "Not Activated"}</span>
         </Space>
       ),
       filters: [
@@ -162,32 +169,38 @@ const UserList = ({
       key: "action",
       render: (text, record) => (
         <>
-        <Space size="middle">
-          <a
-            onClick={() => {
-              if (type == "none") {
-                setShowModal(true);
-                setCurrentUser(record);
-              }
+          <Space size="middle">
+            <a
+              onClick={() => {
+                if (type == "none") {
+                  setShowModal(true);
+                  setCurrentUser(record);
+                }
 
-              if (type == "modal") {
-                setUser(record);
+                if (type == "modal") {
+                  setUser(record);
+                }
+              }}
+            >
+              <EditOutlined />
+            </a>
+            <DeleteOutlined
+              onClick={() => {
+                setUserDelete(record);
+                setShowModalDelete(true);
+              }}
+            />
+            <Switch
+              checked={record.status === 1 ? true : false}
+              onChange={(checked) =>
+                handleChangeStatus({
+                  userId: record._id,
+                  status: checked === true ? 1 : 0,
+                })
               }
-            }}
-          >
-            <EditOutlined />
-          </a>
-          <Switch
-            checked={record.status === 1 ? true : false}
-            onChange={(checked) =>
-              handleChangeStatus({
-                userId: record._id,
-                status: checked === true ? 1 : 0,
-              })
-            }
-          />
+            />
 
-          {/* <a
+            {/* <a
             onClick={() => {
               setListUsers(
                 listUsers.map((e) => {
@@ -199,11 +212,12 @@ const UserList = ({
           >
             View
           </a> */}
-        </Space>
+          </Space>
         </>
       ),
     },
   ];
+
 
   useEffect(() => {
     console.log("listUsers", listUsers);
@@ -214,10 +228,22 @@ const UserList = ({
       <div>
         <Table
           dataSource={listUsers}
-          columns={type!="modal"? columns:columns.slice(0,columns.length-1)}
+          columns={
+            type != "modal" ? columns : columns.slice(0, columns.length - 1)
+          }
           scroll={{ y: type == "none" ? -1 : 300 }}
         ></Table>
       </div>
+      <Dialog
+        key={"dialogDelete"}
+        size="sm"
+        nameBtnSuccess="Delete"
+        showModal={showModalDelete}
+        setShowModal={setShowModalDelete}
+        onSubmit={()=>onDeleteUser(userDelete)}
+      >
+        Are you sure you want to delete user {userDelete?.username}?
+      </Dialog>
     </>
   );
 };

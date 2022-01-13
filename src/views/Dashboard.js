@@ -33,6 +33,7 @@ function Dashboard() {
   const [currentDayActivity, setCurrentDayActivity] = useState(0);
   const [currentDayCheckIn, setCurrentDayCheckIn] = useState(0);
   const [currentNewUser, setCurrentNewUser] = useState(0);
+  const [currentDayPosts, setCurrentDayPosts] = useState(0);
   const [rangeTypeTime, setRangeTypeTime] = useState("day");
   const [dateArray, setDateArray] = useState([]);
   const [defaultDate, setDefaultDate] = useState([
@@ -66,6 +67,7 @@ function Dashboard() {
     getActivityToday();
     getCheckInToday();
     getNewUserCreated();
+    getNewPostToday();
   }, []);
 
   const getActivityToday = async () => {
@@ -89,6 +91,14 @@ function Dashboard() {
       getConfig()
     );
     setCurrentNewUser(result.data.data);
+  };
+
+  const getNewPostToday = async () => {
+    let result = await axios.get(
+      `${HTTP_CONNECT}/admin/getDataChartPostsNew`,
+      getConfig()
+    );
+    setCurrentDayPosts(result.data.data);
   };
   return (
     <>
@@ -139,7 +149,7 @@ function Dashboard() {
                     <div className="numbers">
                       <p className="card-category">Posts Today</p>
                       <Card.Title as="h4">
-                        {1 + "+"}
+                        {currentDayPosts + "+"}
                       </Card.Title>
                     </div>
                   </Col>
@@ -150,7 +160,7 @@ function Dashboard() {
                 <div
                   style={{ cursor: "pointer" }}
                   className="stats"
-                  onClick={() => getActivityToday()}
+                  onClick={() => getNewPostToday()}
                 >
                   <i className="fas fa-redo mr-1"></i>
                   Update now

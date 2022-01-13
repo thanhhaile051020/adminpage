@@ -21,13 +21,17 @@ import EditUsers from "./EditUser/EditUser";
 import { getUsers } from "store/user/user.action";
 import Search from "components/Search/index";
 import UserList from "./UserList";
-import { changeStatusUser ,updateProfile} from "store/user/user.action";
+import { changeStatusUser, updateProfile } from "store/user/user.action";
+import axios from "axios";
+import { HTTP_CONNECT } from "config";
+import { getConfig } from "util/index";
 const UserManagement = ({ match }) => {
   const reducerUsers = useSelector(
     (state) => state.userReducer.listUsers ?? []
   );
   const formRef = useRef();
   const [showModal, setShowModal] = useState(false);
+
   const dispatch = useDispatch();
   const [listUsers, setListUsers] = useState(reducerUsers);
   const [listUsersSearched, setListUsersSearched] = useState([]);
@@ -78,8 +82,17 @@ const UserManagement = ({ match }) => {
       userId: currentUser._id,
       data: formRef.current.getFormValue(),
     };
-    dispatch(updateProfile(data))
+    dispatch(updateProfile(data));
   };
+
+  const onDeleteUser = async (data) => {
+    await axios.get(
+      `${HTTP_CONNECT}/admin/deleteUser/${data._id}`,
+      getConfig()
+    );
+    setListUsers(listUsers.filter((user) => data._id != user._id));
+  };
+
   return (
     <>
       <Container fluid>
@@ -101,6 +114,7 @@ const UserManagement = ({ match }) => {
                   setCurrentUser={setCurrentUser}
                   setShowModal={setShowModal}
                   handleChangeStatus={handleChangeStatus}
+                  onDeleteUser={onDeleteUser}
                 ></UserList>
                 {/* </Table> */}
               </Card.Body>
@@ -108,6 +122,7 @@ const UserManagement = ({ match }) => {
           </Col>
         </Row>
         <Dialog
+          key={"dialogUser"}
           size="lg"
           showModal={showModal}
           setShowModal={setShowModal}
