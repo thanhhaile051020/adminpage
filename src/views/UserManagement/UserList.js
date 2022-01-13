@@ -184,12 +184,12 @@ const UserList = ({
             >
               <EditOutlined />
             </a>
-            <DeleteOutlined
+            {/* <DeleteOutlined
               onClick={() => {
                 setUserDelete(record);
                 setShowModalDelete(true);
               }}
-            />
+            /> */}
             <Switch
               checked={record.status === 1 ? true : false}
               onChange={(checked) =>
