@@ -144,7 +144,7 @@ const EditUser = forwardRef(({ user }, ref) => {
               listUsers={friends}
             ></UserList>
           </TabPane>
-          <TabPane tab="Follower" key="2">
+          {/* <TabPane tab="Follower" key="2">
             <UserList
               type="modal"
               setUser={setUser}
@@ -157,7 +157,7 @@ const EditUser = forwardRef(({ user }, ref) => {
               setUser={setUser}
               listUsers={currentUser.followings}
             ></UserList>
-          </TabPane>
+          </TabPane> */}
         </Tabs>
       </Row>
       {/* <Form.Item {...tailLayout}>

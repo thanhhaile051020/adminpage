@@ -93,13 +93,13 @@ const dashboardRoutes = [
   //   component: Typography,
   //   layout: "/admin",
   // },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-atom",
-    component: Icons,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "nc-icon nc-atom",
+  //   component: Icons,
+  //   layout: "/admin",
+  // },
   // {
   //   path: "/maps",
   //   name: "Maps",
